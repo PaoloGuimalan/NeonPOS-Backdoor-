@@ -14,6 +14,8 @@ export async function POST(req: NextRequest) {
         const category = rqst.category;
 
         const accountID = rqst.accountID;
+        const userID = rqst.userID;
+        const deviceID = rqst.deviceID;
 
         const newProductID = await createUniqueProductID("PRD_ID_" + makeID(15));
         const newproduct = new Product({
@@ -27,7 +29,8 @@ export async function POST(req: NextRequest) {
             ],
             addedBy: {
                 accountID: accountID,
-                deviceID: "DVC_47497429610967951139"
+                userID: userID,
+                deviceID: deviceID
             },
             dateAdded: dateGetter()
         })

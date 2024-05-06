@@ -10,6 +10,8 @@ export async function POST(req: NextRequest) {
 	return await establishconnection().then(async () => {
         const permissionType = rqst.permissionType;
         const allowedUsers = rqst.allowedUsers;
+        const userID = rqst.userID;
+        const deviceID = rqst.deviceID;
 
 		const newPermissionID = await createPermissionID("PRM_ID_" + makeID(15));
 		const newpermission = new UserPermission({
@@ -17,6 +19,10 @@ export async function POST(req: NextRequest) {
             permissionType: permissionType,
             allowedUsers: allowedUsers,
             isEnabled: true,
+            from: {
+                userID: userID,
+                deviceID: deviceID
+            }
         })
 
         // res.send({ status: true, message: "Permission creation has been stalled" });

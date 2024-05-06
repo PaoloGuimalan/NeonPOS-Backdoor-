@@ -8,6 +8,7 @@ const order = new ordermongoose.Schema({
     receivedAmount: Number,
     orderMadeBy: {
         accountID: {type: ordermongoose.Schema.Types.Mixed, require: true},
+        userID: {type: ordermongoose.Schema.Types.Mixed, require: true},
         deviceID: {type: ordermongoose.Schema.Types.Mixed, require: true}
     },
     dateUpdated: {type: ordermongoose.Schema.Types.Mixed, require: true}

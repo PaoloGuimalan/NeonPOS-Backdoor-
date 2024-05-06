@@ -17,6 +17,9 @@ export async function POST(req: NextRequest) {
 
         const creatorAccountID = rqst.creatorAccountID;
 
+        const userID = rqst.userID;
+        const deviceID = rqst.deviceID;
+
         const newAccountID = await createUniqueAccountID("ACC_ID_" + makeID(15));
 		const newaccount = new UserAccount({
             accountID: newAccountID,
@@ -30,7 +33,8 @@ export async function POST(req: NextRequest) {
             dateCreated: dateGetter(),
             createdBy: {
                 accountID: creatorAccountID,
-                deviceID: "DVC_47497429610967951139"
+                userID: userID,
+                deviceID: deviceID
             }
         })
 

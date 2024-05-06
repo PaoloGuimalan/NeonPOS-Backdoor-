@@ -12,6 +12,7 @@ const useraccount = new usermongoose.Schema({
     dateCreated: {type: usermongoose.Schema.Types.Mixed, require: true},
     createdBy: {
         accountID: {type: usermongoose.Schema.Types.Mixed, require: true},
+        userID: {type: usermongoose.Schema.Types.Mixed, require: true},
         deviceID: {type: usermongoose.Schema.Types.Mixed, require: true}
     }
 });

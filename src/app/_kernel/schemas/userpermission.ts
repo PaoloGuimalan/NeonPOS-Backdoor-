@@ -5,6 +5,10 @@ const userpermission = new userpermissionmongoose.Schema({
     permissionType: {type: userpermissionmongoose.Schema.Types.Mixed, require: true},
     allowedUsers: [{type: userpermissionmongoose.Schema.Types.Mixed, require: true}],
     isEnabled: {type: userpermissionmongoose.Schema.Types.Mixed, require: true},
+    from: {
+        userID: {type: userpermissionmongoose.Schema.Types.Mixed, require: true},
+        deviceID: {type: userpermissionmongoose.Schema.Types.Mixed, require: true}
+    }
 });
 
 export default userpermissionmongoose.models.UserPermission || userpermissionmongoose.model("UserPermission", userpermission, "userpermissions");

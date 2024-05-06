@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
 	return await establishconnection().then(async () => {
 		const accountID = rqst.accountID;
 		const password = rqst.password;
+		const userID = rqst.userID;
 		return await UserAccount.aggregate([
 			{
 				$match: {
@@ -17,6 +18,9 @@ export async function POST(req: NextRequest) {
 						},
 						{
 							password: password
+						},
+						{
+							"createdBy.userID": userID
 						}
 					]
 				}
@@ -33,7 +37,8 @@ export async function POST(req: NextRequest) {
 								$expr: {
 									$and: [
 										{ $in: ["$$accountType", "$allowedUsers"] },
-										{ $eq: [true, "$isEnabled"] }
+										{ $eq: [true, "$isEnabled"] },
+										{ $eq: [userID, "$from.userID"] }
 									]
 								}
 							}

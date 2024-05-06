@@ -9,6 +9,7 @@ const product = new productmongoose.Schema({
     previews: [{type: productmongoose.Schema.Types.Mixed, require: true}],
     addedBy: {
         accountID: {type: productmongoose.Schema.Types.Mixed, require: true},
+        userID: {type: productmongoose.Schema.Types.Mixed, require: true},
         deviceID: {type: productmongoose.Schema.Types.Mixed, require: true}
     },
     dateAdded: {type: productmongoose.Schema.Types.Mixed, require: true}
