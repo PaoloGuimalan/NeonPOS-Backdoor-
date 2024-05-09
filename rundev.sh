@@ -1,0 +1,3 @@
+cd /home/neonpos/Documents/Projects/NeonSystems/NeonPOS_API
+
+yarn run dev
