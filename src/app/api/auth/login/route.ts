@@ -58,7 +58,12 @@ export async function POST(req: NextRequest) {
 				}
 			}
 		]).then((result) => {
-			return NextResponse.json({ status: true, result: result });
+			if(result.length > 0){
+				return NextResponse.json({ status: true, result: result });
+			}
+			else{
+				return NextResponse.json({ status: false, message: "No Account matched" });
+			}
 		}).catch((err) => {
 			return NextResponse.json({ status: false, result: err });
 		})
