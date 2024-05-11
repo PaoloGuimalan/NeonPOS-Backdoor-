@@ -10,6 +10,6 @@ export default async () => {
 		client = await mongoose.connect(MONGODB_URI);
         return true;
 	} catch (error) {
-        throw new Error(error);
+        throw new Error("Error establishing connection");
 	}
 }
