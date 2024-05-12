@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         })
         
         return await neworder.save().then(() => {
-            return NextResponse.json({ status: true, message: "Order has been saved" });
+            return NextResponse.json({ status: true, message: "Order has been saved", result: { orderID: newOrderID } });
         }).catch((err: any) => {
             console.log(err);
             return NextResponse.json({ status: false, message: "There was a problem saving the order" });
