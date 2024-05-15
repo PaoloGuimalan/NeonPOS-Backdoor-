@@ -7,10 +7,10 @@ import { GetOrdersParamsJwtPayload } from "@/app/_kernel/vars/interfaces";
 
 export async function GET(req: NextRequest, { params }: { params: { token: string } }) {
     const rqst = await req.json();
-    const { userID, deviceID } = jwt.verify(params.token, "") as GetOrdersParamsJwtPayload;
+    const { userID } = jwt.verify(params.token, "") as GetOrdersParamsJwtPayload;
 
 	return await establishconnection().then(async () => {
-        return await Order.find({ "orderMadeBy.userID": userID, "orderMadeBy.deviceID": deviceID }).then((result) => {
+        return await Order.find({ "orderMadeBy.userID": userID }).then((result) => {
             return NextResponse.json({ status: true, result: result });
         }).catch((err) => {
             console.log(err);
