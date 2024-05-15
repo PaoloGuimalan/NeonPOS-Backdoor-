@@ -4,10 +4,11 @@ import Order from '../../../../_kernel/schemas/order';
 import { NextRequest, NextResponse } from "next/server";
 import jwt from 'jsonwebtoken';
 import { GetOrdersParamsJwtPayload } from "@/app/_kernel/vars/interfaces";
+import { JWT_SECRET } from "@/app/_kernel/vars/keys";
 
 export async function GET(req: NextRequest, { params }: { params: { token: string } }) {
-    const rqst = await req.json();
-    const { userID } = jwt.verify(params.token, "") as GetOrdersParamsJwtPayload;
+    // const rqst = await req.json();
+    const { userID } = jwt.verify(params.token, JWT_SECRET) as GetOrdersParamsJwtPayload;
 
 	return await establishconnection().then(async () => {
         return await Order.find({ "orderMadeBy.userID": userID }).then((result) => {
