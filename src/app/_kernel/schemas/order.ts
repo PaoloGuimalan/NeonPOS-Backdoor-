@@ -6,6 +6,7 @@ const order = new ordermongoose.Schema({
         product: {
             addedBy: {
                 accountID: {type: ordermongoose.Schema.Types.Mixed, require: true}, 
+                userID: {type: ordermongoose.Schema.Types.Mixed, require: true},
                 deviceID: {type: ordermongoose.Schema.Types.Mixed, require: true}
             },
             category: {type: ordermongoose.Schema.Types.Mixed, require: true},
