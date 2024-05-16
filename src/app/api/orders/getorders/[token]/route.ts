@@ -12,7 +12,7 @@ export async function GET(req: NextRequest, { params }: { params: { token: strin
 
 	return await establishconnection().then(async () => {
         if(orderID.trim() === ""){
-            return await Order.find({ "orderMadeBy.userID": userID }).then((result) => {
+            return await Order.find({ "orderMadeBy.userID": userID }).sort({ _id: -1 }).then((result) => {
                 return NextResponse.json({ status: true, result: result });
             }).catch((err) => {
                 console.log(err);
