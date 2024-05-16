@@ -20,7 +20,7 @@ export async function GET(req: NextRequest, { params }: { params: { token: strin
             })
         }
         else{
-            return await Order.find({ "orderMadeBy.userID": userID, orderID: orderID }).then((result) => {
+            return await Order.find({ "orderMadeBy.userID": userID, orderID: orderID }).sort({ _id: -1 }).then((result) => {
                 return NextResponse.json({ status: true, result: result });
             }).catch((err) => {
                 console.log(err);
