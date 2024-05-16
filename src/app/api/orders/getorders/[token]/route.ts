@@ -11,12 +11,22 @@ export async function GET(req: NextRequest, { params }: { params: { token: strin
     const { userID, orderID } = jwt.verify(params.token, JWT_SECRET) as GetOrdersParamsJwtPayload;
 
 	return await establishconnection().then(async () => {
-        return await Order.find({ "orderMadeBy.userID": userID, orderID: orderID }).then((result) => {
-            return NextResponse.json({ status: true, result: result });
-        }).catch((err) => {
-            console.log(err);
-            return NextResponse.json({ status: false, message: "Cannot fetch orders" });
-        })
+        if(orderID.trim() === ""){
+            return await Order.find({ "orderMadeBy.userID": userID }).then((result) => {
+                return NextResponse.json({ status: true, result: result });
+            }).catch((err) => {
+                console.log(err);
+                return NextResponse.json({ status: false, message: "Cannot fetch orders" });
+            })
+        }
+        else{
+            return await Order.find({ "orderMadeBy.userID": userID, orderID: orderID }).then((result) => {
+                return NextResponse.json({ status: true, result: result });
+            }).catch((err) => {
+                console.log(err);
+                return NextResponse.json({ status: false, message: "Cannot fetch orders" });
+            })
+        }
 	}).catch((err) => {
 		console.log(err);
         return NextResponse.json({ status: false, message: "Error establishing connection" });
