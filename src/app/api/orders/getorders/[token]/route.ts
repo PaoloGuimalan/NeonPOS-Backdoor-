@@ -8,10 +8,10 @@ import { JWT_SECRET } from "@/app/_kernel/vars/keys";
 
 export async function GET(req: NextRequest, { params }: { params: { token: string } }) {
     // const rqst = await req.json();
-    const { userID } = jwt.verify(params.token, JWT_SECRET) as GetOrdersParamsJwtPayload;
+    const { userID, orderID } = jwt.verify(params.token, JWT_SECRET) as GetOrdersParamsJwtPayload;
 
 	return await establishconnection().then(async () => {
-        return await Order.find({ "orderMadeBy.userID": userID }).then((result) => {
+        return await Order.find({ "orderMadeBy.userID": userID, orderID: orderID }).then((result) => {
             return NextResponse.json({ status: true, result: result });
         }).catch((err) => {
             console.log(err);
