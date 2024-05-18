@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         const userID = rqst.userID;
         const deviceID = rqst.deviceID;
 
-        const newAccountID = await createUniqueAccountID("ACC_ID_" + makeID(15));
+        const newAccountID = await createUniqueAccountID("ACC_ID_" + makeID(4) + "_" + makeID(4) + "_" + makeID(4));
 		const newaccount = new UserAccount({
             accountID: newAccountID,
             accountType: accountType,

@@ -20,6 +20,7 @@ const order = new ordermongoose.Schema({
         quantity: Number
     }],
     dateMade: {type: ordermongoose.Schema.Types.Mixed, require: true},
+    timeMade: {type: ordermongoose.Schema.Types.Mixed, require: true},
     totalAmount: Number,
     receivedAmount: Number,
     orderMadeBy: {

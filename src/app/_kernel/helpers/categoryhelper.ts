@@ -1,14 +1,14 @@
 import establishconnection from "../utils/establishconnection";
 
-import UserAccount from '../schemas/useracccount';
+import Category from '../schemas/category';
 import { makeID } from "../reusables/generatefns";
 
-async function createUniqueAccountID(initID: string) {
+async function createUniqueCategoryID(initID: string) {
 	return await establishconnection().then( async () => {
-		return await UserAccount.find({ accountID: initID }).then((result) => {
+		return await Category.find({ categoryID: initID }).then((result) => {
             if(result.length > 0){
-                const generatedAccountID = "ACC_ID_" + makeID(4) + "_" + makeID(4) + "_" + makeID(4); //"ACC_ID_" + makeID(15)
-                createUniqueAccountID(generatedAccountID);
+                const generatedAccountID = "CAT_" + makeID(15);
+                createUniqueCategoryID(generatedAccountID);
             }
             else{
                 return initID;
@@ -23,5 +23,5 @@ async function createUniqueAccountID(initID: string) {
 }
 
 export {
-    createUniqueAccountID
+    createUniqueCategoryID
 }
