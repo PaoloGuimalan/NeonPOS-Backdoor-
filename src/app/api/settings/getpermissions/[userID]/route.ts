@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest, { params }: { params: { userID: string } }) {
 	return await establishconnection().then(async () => {
-		return await UserPermission.find({ "from.userID": params.userID }).then((result) => {
+		return await UserPermission.find({ "from.userID": params.userID }).sort({ _id: -1 }).then((result) => {
             return NextResponse.json({ status: true, result: result });
         }).catch((err) => {
             console.log(err);
