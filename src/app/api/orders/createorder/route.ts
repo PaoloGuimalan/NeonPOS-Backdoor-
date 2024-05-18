@@ -10,6 +10,13 @@ export async function POST(req: NextRequest) {
 	return await establishconnection().then(async () => {
 
         const newOrderID = await createUniqueOrderID("ORD_" + makeID(15));
+
+        if(rqst.voidedFrom.trim() !== ""){
+            Order.findOneAndUpdate({ orderID: rqst.voidedFrom }, { status: "Voided" }).catch((err) => {
+                console.log(err);
+            });
+        }
+
         const neworder = new Order({
             orderID: newOrderID,
             dateMade: dateGetter(),
