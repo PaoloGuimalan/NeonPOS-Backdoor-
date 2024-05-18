@@ -31,7 +31,7 @@ const order = new ordermongoose.Schema({
     dateUpdated: {type: ordermongoose.Schema.Types.Mixed, require: true},
     status: {type: ordermongoose.Schema.Types.Mixed},
     voidedFrom: {type: ordermongoose.Schema.Types.Mixed},
-    discount: {type: ordermongoose.Schema.Types.Mixed}
+    discount: Number
 });
 
 export default ordermongoose.models.Order || ordermongoose.model("Order", order, "orders");
