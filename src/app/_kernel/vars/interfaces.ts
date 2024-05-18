@@ -8,6 +8,11 @@ export interface DeletePermissionParamsJwtPayload {
     permissionID: string;
 }
 
+export interface DeleteProductParamsJwtPayload {
+    userID: string;
+    productID: string;
+}
+
 export interface RemoveUserParamsJwtPayload {
     userID: string;
     accountID: string;
