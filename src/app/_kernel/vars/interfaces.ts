@@ -34,3 +34,10 @@ export interface TokenHeaderJwtPayload {
     setup: string;
     accountID: string;
 }
+
+export interface GenerateReportJwtPayload {
+    userID: string;
+    deviceID: string;
+    datescope: string;
+    timescope: string;
+}
