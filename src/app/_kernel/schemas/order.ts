@@ -21,6 +21,7 @@ const order = new ordermongoose.Schema({
     }],
     dateMade: {type: ordermongoose.Schema.Types.Mixed, require: true},
     timeMade: {type: ordermongoose.Schema.Types.Mixed, require: true},
+    tableNumber: {type: ordermongoose.Schema.Types.Mixed, require: true},
     totalAmount: Number,
     receivedAmount: Number,
     orderMadeBy: {
