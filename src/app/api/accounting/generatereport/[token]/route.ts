@@ -30,18 +30,27 @@ export async function GET(req: NextRequest, { params }: { params: { token: strin
                     dateMade: { $first: "$dateMade" },
                     numberofsales: { $sum: 1 },
                     totalsales: { $sum: "$totalAmount" },
-                    discount: { $avg: "$discount" }
+                    // discount: { $avg: "$discount" },
+                    individualDiscounts: {
+                        $addToSet: {
+                            discount: "$discount",
+                            totalAmount: "$totalAmount",
+                            convertedDiscount: { $multiply: [{ $divide: ["$discount", 100] }, "$totalAmount"] }
+                        }
+                    }
                 }
             },{
                 $project: {
                     numberofsales: 1,
                     totalsales: 1,
                     dateMade: 1,
-                    discount: 1,
-                    discounttotal: { $multiply: ["$totalsales", { $divide: ["$discount", 100] }] },
-                    saleswdiscount: { $subtract: ["$totalsales", { $multiply: ["$totalsales", { $divide: ["$discount", 100] }] }] },
-                    taxtotal: { $multiply: [{ $subtract: ["$totalsales", { $multiply: ["$totalsales", { $divide: ["$discount", 100] }] }] }, 0.12] },
-                    taxedsales: { $subtract: [{ $subtract: ["$totalsales", { $multiply: ["$totalsales", { $divide: ["$discount", 100] }] }] },{ $multiply: [{ $subtract: ["$totalsales", { $multiply: ["$totalsales", { $divide: ["$discount", 100] }] }] }, 0.12] }] }
+                    discount: { $divide: [{ $multiply: [ 100, { $sum: "$individualDiscounts.convertedDiscount" } ] }, "$totalsales"] },
+                    individualDiscounts: 1,
+                    // discounttotal: { $multiply: ["$totalsales", { $divide: ["$discount", 100] }] },
+                    discounttotal: { $sum: "$individualDiscounts.convertedDiscount" },
+                    saleswdiscount: { $subtract: ["$totalsales", { $sum: "$individualDiscounts.convertedDiscount" }] },
+                    taxtotal: { $multiply: [{ $subtract: ["$totalsales", { $sum: "$individualDiscounts.convertedDiscount" }] }, 0.12] },
+                    taxedsales: { $subtract: [{ $subtract: ["$totalsales", { $sum: "$individualDiscounts.convertedDiscount" }] },{ $multiply: [{ $subtract: ["$totalsales", { $multiply: ["$totalsales", { $divide: [{ $divide: [{ $multiply: [ 100, { $sum: "$individualDiscounts.convertedDiscount" } ] }, "$totalsales"] }, 100] }] }] }, 0.12] }] }
                 }
             }
         ]).then((result) => {
