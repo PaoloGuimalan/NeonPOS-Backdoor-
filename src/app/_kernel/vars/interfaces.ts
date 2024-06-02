@@ -1,6 +1,7 @@
 export interface GetOrdersParamsJwtPayload {
     userID: string;
     orderID: string;
+    datescope: string | null | undefined;
 }
 
 export interface DeletePermissionParamsJwtPayload {

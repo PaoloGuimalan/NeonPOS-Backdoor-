@@ -8,24 +8,44 @@ import { JWT_SECRET } from "@/app/_kernel/vars/keys";
 
 export async function GET(req: NextRequest, { params }: { params: { token: string } }) {
     // const rqst = await req.json();
-    const { userID, orderID } = jwt.verify(params.token, JWT_SECRET) as GetOrdersParamsJwtPayload;
+    const { userID, orderID, datescope } = jwt.verify(params.token, JWT_SECRET) as GetOrdersParamsJwtPayload;
 
 	return await establishconnection().then(async () => {
-        if(orderID.trim() === ""){
-            return await Order.find({ "orderMadeBy.userID": userID }).sort({ _id: -1 }).then((result) => {
-                return NextResponse.json({ status: true, result: result });
-            }).catch((err) => {
-                console.log(err);
-                return NextResponse.json({ status: false, message: "Cannot fetch orders" });
-            })
+        if(datescope){
+            if(orderID.trim() === ""){
+                return await Order.find({ "orderMadeBy.userID": userID, dateMade: datescope }).sort({ _id: -1 }).then((result) => {
+                    return NextResponse.json({ status: true, result: result });
+                }).catch((err) => {
+                    console.log(err);
+                    return NextResponse.json({ status: false, message: "Cannot fetch orders" });
+                })
+            }
+            else{
+                return await Order.find({ "orderMadeBy.userID": userID, orderID: orderID, dateMade: datescope }).sort({ _id: -1 }).then((result) => {
+                    return NextResponse.json({ status: true, result: result });
+                }).catch((err) => {
+                    console.log(err);
+                    return NextResponse.json({ status: false, message: "Cannot fetch orders" });
+                })
+            }
         }
         else{
-            return await Order.find({ "orderMadeBy.userID": userID, orderID: orderID }).sort({ _id: -1 }).then((result) => {
-                return NextResponse.json({ status: true, result: result });
-            }).catch((err) => {
-                console.log(err);
-                return NextResponse.json({ status: false, message: "Cannot fetch orders" });
-            })
+            if(orderID.trim() === ""){
+                return await Order.find({ "orderMadeBy.userID": userID }).sort({ _id: -1 }).then((result) => {
+                    return NextResponse.json({ status: true, result: result });
+                }).catch((err) => {
+                    console.log(err);
+                    return NextResponse.json({ status: false, message: "Cannot fetch orders" });
+                })
+            }
+            else{
+                return await Order.find({ "orderMadeBy.userID": userID, orderID: orderID }).sort({ _id: -1 }).then((result) => {
+                    return NextResponse.json({ status: true, result: result });
+                }).catch((err) => {
+                    console.log(err);
+                    return NextResponse.json({ status: false, message: "Cannot fetch orders" });
+                })
+            }
         }
 	}).catch((err) => {
 		console.log(err);
