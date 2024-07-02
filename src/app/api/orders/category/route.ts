@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
 	return await establishconnection().then(async () => {
-        const token = req.headers.get("access_token") || req.headers.get("Access_token");
+        const token = req.headers.get("x-access-token");
         if(token){
             const { userID } = jwt.verify(token, JWT_SECRET) as TokenHeaderJwtPayload;
             return await Category.find({ "from.userID": userID }).then((result) => {
